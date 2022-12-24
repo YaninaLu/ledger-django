@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ledger</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"/>
+  </head>
+  <main class="container">
+    <body>
+      <h1>Welcome to the ledger!</h1>
+      <a href="{% url 'ledgerapp:spendings' %}" class="outline" role="button">Spendings</a>
+      <a href="{% url 'ledgerapp:earnings' %}" class="outline" role="button">Earnings</a>
+      <a href="{% url 'reportsapp:main' %}" class="outline" role="button">Generate Report</a>
+    </body>
+  </main>
+</html>

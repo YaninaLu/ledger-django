@@ -1,0 +1,105 @@
+{% extends 'reportsapp/report.html' %}
+
+{% block scripts %}
+    <script>
+    const spendingData = [{% for key, value in spendings.items %}{{ value }}, {% endfor %}];
+    const earnData = [{% for key, value in earnings.items %}{{ value}}, {% endfor %}];
+    const spendingLabels = [{% for key, value in spendings.items %}'{{ key}}',{% endfor %}];
+    const earnLabels = [{% for key, value in earnings.items %}'{{ key }}',{% endfor %}];
+
+    $(document).ready(function () {
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    label: 'Spendings',
+                    data: spendingData,
+                    backgroundColor: [
+                        '#79e0e0', '#7fc977', '#ec7b7b', '#daca7a', '#D3D3D3', '#E590EC', '#ECC38B', '#AABEEC',
+                        '#1BEC22', '#EC4C42', '#232FEC', '#E424EC', '#ECE61A', '#9DECD4', '#EC9D24', '#1BA3EC',
+                        '#BBECDA'
+                    ],
+                }],
+                labels: spendingLabels
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        new Chart(document.getElementById('SpendingChart'), config);
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    label: 'Earnings',
+                    data: earnData,
+                    backgroundColor: [
+                        '#79e0e0', '#7fc977', '#ec7b7b', '#daca7a', '#D3D3D3', '#E590EC', '#ECC38B', '#AABEEC',
+                        '#1BEC22', '#EC4C42', '#232FEC', '#E424EC', '#ECE61A', '#9DECD4', '#EC9D24', '#1BA3EC',
+                        '#BBECDA'
+                    ],
+                }],
+                labels: earnLabels
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        new Chart(document.getElementById('EarningChart'), config);
+
+        var config = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'Total',
+                    data: [{{ total_spent }}, {{ total_earned }}, {{ saved }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    borderWidth: 1
+                }],
+                labels: ["All spent", "All earned", "Saved"]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('TotalsChart'), config);
+    });
+    </script>
+{% endblock scripts %}
+
+
+{% block content %}
+    <div class="chartsContainer">
+        <h4>Spendings Chart</h4>
+        <canvas id="SpendingChart" width="300" height="100"></canvas>
+    </div>
+
+    <div class="chartsContainer">
+        <h4>Earnings Chart</h4>
+        <canvas id="EarningChart" width="300" height="100"></canvas>
+    </div>
+
+    <div class="chartsContainer">
+        <h4>Total</h4>
+        <canvas id="TotalsChart" width="300" height="100"></canvas>
+    </div>
+
+{% endblock %}

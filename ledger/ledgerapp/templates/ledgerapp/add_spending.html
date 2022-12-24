@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add a new spending</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"/>
+  </head>
+  <body>
+    <main class="container">
+      <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        <ul>
+          <li><a href="{% url 'ledgerapp:main' %}" role="button" class="secondary"> Go back to the main page </a></li>
+        </ul>
+      </nav>
+
+      {% block messages %}
+        <ul class="messages" id="messages-list">
+          {% if messages %}
+            {% for message in messages %}
+              <li>
+                {% if message.tags %}
+                  <div class="alert alert-{{ message.tags }} msg fade show">{{ message }}</div>
+                {% else %}
+                  <div class="alert alert-info msg fade show" role="alert">{{ message }}</div>
+                {% endif %}
+              </li>
+              {% endfor %}
+          {% endif %}
+        </ul>
+      {% endblock %}
+
+      <form method="POST" action="{% url 'ledgerapp:add_spending' %}">
+        {% csrf_token %}
+        <div style="padding: 10px">
+          <label>Date:
+            {{form.date}}
+          </label>
+        </div>
+        <div style="padding: 10px">
+          <label>Amount in UAH:
+            {{form.amount}}
+          </label>
+        </div>
+        <div style="padding: 10px">
+          <label>Select one category:
+            <select name="category" required>
+              {% for category in categories %}
+              <option value="{{category.name}}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+        </div>
+        <div style="padding: 10px">
+          <label>Comment:
+            {{form.comment}}
+          </label>
+        </div>
+        <div class="grid">
+          <button type="submit" class="contrast">Submit</button>
+          <button type="reset" class="secondary">Reset</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
