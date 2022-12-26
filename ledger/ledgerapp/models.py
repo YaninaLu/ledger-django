@@ -1,7 +1,5 @@
 from django.db import models
 
-from datetime import date
-
 
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False, unique=True)
@@ -14,7 +12,7 @@ class Category(models.Model):
 
 
 class Spending(models.Model):
-    date = models.DateField(default=date.today)
+    date = models.DateField(auto_now_add=True)
     amount = models.CharField(max_length=7, null=False)
     comment = models.TextField(max_length=400)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -37,7 +35,7 @@ class Source(models.Model):
 
 
 class Earning(models.Model):
-    date = models.DateField(default=date.today)
+    date = models.DateField(auto_now_add=True)
     amount = models.CharField(max_length=7, null=False)
     comment = models.TextField(max_length=400)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
